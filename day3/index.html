@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>css variables updated by js</title>
+		<style>
+			:root{
+				--base: #ffc600;
+				--spacing: 10px;
+				--blur: 10px;
+			}
+			html,body{
+				padding: 0;
+				margin:0;
+				text-align: center;
+			}
+			img{
+				width: 800px;
+				height: 500px;
+				padding: var(--spacing);
+				background-color: var(--base);
+				filter:blur(var(--blur));
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Update CSS Variables with JS</h1>
+		<div class="controls">
+			<label for="spacing">Spacing:</label>
+			<input type="range" name="spacing" id="spacing" min="10" max="200" value="10" data-sizing="px">
+			<label for="blur">Blur:</label>
+			<input type="range" name="blur" id="blur" min="0" max="25"  value="10" data-sizing="px">
+			<label for="base">Color:</label>
+			<input type="color" name="base" name="base" value="#ffc600">
+		</div>
+		<div>
+			<img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+		</div>
+		<script>
+			const inputs = document.querySelectorAll('.controls input');
+
+			function updateHandler(){
+				const suffix = this.dataset.sizing|| '';
+				document.documentElement.style.setProperty(`--${this.name}`, this.value+suffix);
+			}
+
+			inputs.forEach(input=>input.addEventListener('change',updateHandler));
+			inputs.forEach(input=>input.addEventListener('mousemove',updateHandler));
+		</script>
+	</body>
+</html>
