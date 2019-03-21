@@ -1,56 +1,58 @@
-<html>
-	<head>
-		<meta charset="utf8">
-		<title>HTML5 Canvas</title>
-	</head>
-	<body>
-		<canvas id="draw" width="800px" height="800px"></canvas>
-		<script>
-			const canvas = document.querySelector('#draw');
-			const context = canvas.getContext('2d');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Array Cardio 💪💪</title>
+</head>
+<body>
+  <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+  <script>
+    // ## Array Cardio Day 2
 
-			context.width = window.innerWidht;
-			context.height = window.innerHeight;
+    const people = [
+      { name: 'Wes', year: 1988 },
+      { name: 'Kait', year: 1986 },
+      { name: 'Irv', year: 1970 },
+      { name: 'Lux', year: 2015 }
+    ];
 
-			context.strokeStyle = "#BADB55";
-			context.lineJoin = "round";
-			context.lineCap = "round";
-			context.lineWidth = "5";
-			context.globalCompositeOperation = 'multiply';
+    const comments = [
+      { text: 'Love this!', id: 523423 },
+      { text: 'Super good', id: 823423 },
+      { text: 'You are the best', id: 2039842 },
+      { text: 'Ramen is my fav food ever', id: 123523 },
+      { text: 'Nice Nice Nice!', id: 542328 }
+    ];
 
-			let lastX = 0;
-			let lastY = 0;
-			let hue = 0;
-			let isDrawing = false;
-			let direction = true;
+    // Some and Every Checks
+    // 
+    // Array.prototype.some() // is at least one person 19 or older?
+    const hasOver19 = people.some((person) => {
+      const currentYear = (new Date()).getFullYear();
+      return (currentYear - person.year) >= 19;
+    })
+    console.log({hasOver19});
 
-			function draw(e){
-				if(!isDrawing) return;
-				context.strokeStyle= `hsl(${hue}, 100%, 50%)`;
-				context.beginPath();
-				context.moveTo(lastX, lastY);
-				context.lineTo(e.offsetX, e.offsetY);
-				context.stroke();
-				if(context.lineWidth >15 || context.lineWidth <5){
-					direction = !direction;
-				}
-				if(direction){
-					context.lineWidth++;
-				}else{
-					context.lineWidth--;
-				}
-				hue++;
-				hue = hue%360;
-				[lastX, lastY] = [e.offsetX, e.offsetY];
-			}
-
-			document.addEventListener('mousemove', draw);
-			document.addEventListener('mousedown', (e) => {
-				isDrawing = true;
-				[lastX, lastY] = [e.offsetX, e.offsetY];
-			});
-			document.addEventListener('mouseup', () => isDrawing = false);
-			document.addEventListener('mouseout', () => isDrawing = false);
-		</script>
-	</body>
+    // Array.prototype.every() // is everyone 19 or older?
+    const allOver19 = people.every((person) => {
+      const currentYear = (new Date()).getFullYear();
+      return (currentYear - person.year) >= 19;
+    })
+    console.log({allOver19});
+    // Array.prototype.find()
+    // Find is like filter, but instead returns just the one you are looking for
+    // find the comment with the ID of 823423
+    const findComment = comments.find( comment => comment.id === 823423);
+    console.table(findComment);
+    // Array.prototype.findIndex()
+    // Find the comment with this ID
+    // delete the comment with the ID of 823423
+    const index = comments.findIndex(comment => comment.id === 823423);
+    console.log(index);
+    //comments.splice(index,1);
+    //console.table(comments);
+    const newComments = [...comments.slice(0,index),...comments.slice(index+1)];
+    console.table(newComments);
+  </script>
+</body>
 </html>
